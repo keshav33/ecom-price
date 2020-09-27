@@ -27,7 +27,9 @@ def products():
     print(query)
 
     # For Flipkart
+    flag = False
     try:
+        print("1st block")
         url = 'https://www.flipkart.com/search?q='+query
         headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0", "Accept-Encoding":"gzip, deflate", "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "DNT":"1","Connection":"close", "Upgrade-Insecure-Requests":"1"}
         r = requests.get(url, headers = headers)
@@ -44,25 +46,26 @@ def products():
         flipkartProductLink = "https://www.flipkart.com" + flipkartProductLink
         flipkartProduct = {'companyName': 'Flipkart', 'productName': flipkartProductName, 'productPrice': flipkartProductPrice, 'productLink': flipkartProductLink}
     except:
-        pass
-    try:
-        url = 'https://www.flipkart.com/search?q='+query
-        headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0", "Accept-Encoding":"gzip, deflate", "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "DNT":"1","Connection":"close", "Upgrade-Insecure-Requests":"1"}
-        r = requests.get(url, headers = headers)
-        htmlcontent = r.content
-        soup = BeautifulSoup(htmlcontent, 'html.parser')
-        flipkartProductPrice = soup.find("div", class_="_1vC4OE").text
-        flipkartProductPrice = flipkartProductPrice[1:].replace("₹", "-")
-        flipkartProductPriceIndex = flipkartProductPrice.find("-")
-        print(flipkartProductPriceIndex)
-        if(flipkartProductPriceIndex > 0):
-            flipkartProductPrice = flipkartProductPrice[:flipkartProductPriceIndex]
-        flipkartProductName = soup.find("a", class_="_2cLu-l").text
-        flipkartProductLink = soup.find("a", class_="_2cLu-l").get("href")
-        flipkartProductLink = "https://www.flipkart.com" + flipkartProductLink
-        flipkartProduct = {'companyName': 'Flipkart', 'productName': flipkartProductName, 'productPrice': flipkartProductPrice, 'productLink': flipkartProductLink}
-    except:
-        flipkartProduct = {'companyName': 'Flipkart', 'productName': 'Null', 'productPrice': 'Null', 'productLink': 'Null'}
+        flag = True
+    if(flag):
+        try:
+            url = 'https://www.flipkart.com/search?q='+query
+            headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0", "Accept-Encoding":"gzip, deflate", "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "DNT":"1","Connection":"close", "Upgrade-Insecure-Requests":"1"}
+            r = requests.get(url, headers = headers)
+            htmlcontent = r.content
+            soup = BeautifulSoup(htmlcontent, 'html.parser')
+            flipkartProductPrice = soup.find("div", class_="_1vC4OE").text
+            flipkartProductPrice = flipkartProductPrice[1:].replace("₹", "-")
+            flipkartProductPriceIndex = flipkartProductPrice.find("-")
+            print(flipkartProductPriceIndex)
+            if(flipkartProductPriceIndex > 0):
+                flipkartProductPrice = flipkartProductPrice[:flipkartProductPriceIndex]
+            flipkartProductName = soup.find("a", class_="_2cLu-l").text
+            flipkartProductLink = soup.find("a", class_="_2cLu-l").get("href")
+            flipkartProductLink = "https://www.flipkart.com" + flipkartProductLink
+            flipkartProduct = {'companyName': 'Flipkart', 'productName': flipkartProductName, 'productPrice': flipkartProductPrice, 'productLink': flipkartProductLink}
+        except:
+            flipkartProduct = {'companyName': 'Flipkart', 'productName': 'Null', 'productPrice': 'Null', 'productLink': 'Null'}
 
     # For Paytm
     try:
