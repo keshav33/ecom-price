@@ -5,10 +5,10 @@ button.addEventListener('click', async () => {
     const table = document.getElementById('myProducts')
     try {
         table.innerHTML = `<div class="d-flex justify-content-center">
-                <div class="spinner-border my-5" style="width: 3rem; height: 3rem;" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>`
+                                <div class="spinner-border my-5" style="width: 3rem; height: 3rem;" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>`
         const params = {
             method: 'post',
             headers: {
@@ -41,9 +41,8 @@ button.addEventListener('click', async () => {
                 </thead>` + `<tbody>` + values + `</tbody>`
     }
     catch {
-        table.innerHTML = `<div class="d-flex justify-content-center">
-        <span>Something went wrong</span>
-            </div>
-        </div>`
+        table.innerHTML = ` <div class="d-flex justify-content-center">
+                                <span>Something went wrong</span>
+                            </div>`
     }
 })
