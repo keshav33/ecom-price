@@ -11,16 +11,9 @@ from bs4 import BeautifulSoup
 app = Flask(__name__)
 cors = CORS(app)
 
-@app.route('/name', methods=['GET', 'POST'])
-def getName():
-    global data
-    data = request.data
-    data = str(data)
-    return data
-
-@app.route("/products")
+@app.route("/products", methods=['GET', 'POST'])
 def products():
-    time.sleep(1)
+    data = str(request.data)
     query = data.replace("'","")
     query = query[1:]
     query = query.replace(" ", "+")
